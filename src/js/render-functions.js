@@ -32,6 +32,7 @@ async function handleSubmit(e) {
     currentPage = 1; // Скидаємо сторінку до початкового значення при новому пошуковому запиті
     imagesContainer.innerHTML = ''; // Очищуємо контейнер для зображень
     await fetchImages(query, currentPage);
+    
 }
 
 async function fetchImages(query, page) {

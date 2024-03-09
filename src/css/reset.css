@@ -128,7 +128,6 @@ color: #2e2f42;
 .load-more-btn{
   border-radius: 8px;
   padding: 8px 16px;
-  margin-top: 32px;
   width: 125px;
   height: 40px;
   background: #4e75ff;
@@ -142,4 +141,7 @@ line-height: 1.5;
 letter-spacing: 0.04em;
 color: #fff;
 
+}
+.hidden {
+  display: none;
 }
