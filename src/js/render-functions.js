@@ -29,8 +29,8 @@ async function handleSubmit(e) {
         });
         return;
     }
-    currentPage = 1; // Скидаємо сторінку до початкового значення при новому пошуковому запиті
-    imagesContainer.innerHTML = ''; // Очищуємо контейнер для зображень
+    currentPage = 1;
+    imagesContainer.innerHTML = '';
     await fetchImages(query, currentPage);
     
 }
@@ -52,10 +52,10 @@ async function fetchImages(query, page) {
             return;
         }
         renderImages(data.hits);
-        if (data.totalHits > page * 15) { // Перевіряємо, чи є ще зображення для завантаження
-            loadMoreBtn.classList.remove('hidden'); // Показуємо кнопку "Load more"
+        if (data.totalHits > page * 15) {
+            loadMoreBtn.classList.remove('hidden'); 
         } else {
-            loadMoreBtn.classList.add('hidden'); // Ховаємо кнопку "Load more", якщо всі зображення вже завантажено
+            loadMoreBtn.classList.add('hidden'); 
         }
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -70,16 +70,16 @@ async function fetchImages(query, page) {
 }
 
 async function loadMoreImages() {
-    currentPage++; // Збільшуємо номер сторінки для наступного запиту
+    currentPage++; 
     const query = inputForm.value.trim();
     await fetchImages(query, currentPage);
 }
 function smoothScroll() {
     const cardHeight = document.querySelector('.photo-card').getBoundingClientRect().height;
     window.scrollBy({
-        top: cardHeight * 2, // Прокручуємо на дві висоти карточки галереї
+        top: cardHeight * 2, 
         left: 0,
-        behavior: 'smooth' // Плавна прокрутка
+        behavior: 'smooth' 
     });
 }
 
