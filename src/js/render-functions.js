@@ -17,6 +17,7 @@ let currentPage = 1;
 form.addEventListener('submit', handleSubmit);
 loadMoreBtn.addEventListener('click', loadMoreImages);
 
+
 async function handleSubmit(e) {
     e.preventDefault();
     const query = inputForm.value.trim();
@@ -28,12 +29,8 @@ async function handleSubmit(e) {
         });
         return;
     }
-    await fetchImages(query, currentPage);
-}
-
-async function loadMoreImages() {
-    currentPage++;
-    const query = inputForm.value.trim();
+    currentPage = 1; // Скидаємо сторінку до початкового значення при новому пошуковому запиті
+    imagesContainer.innerHTML = ''; // Очищуємо контейнер для зображень
     await fetchImages(query, currentPage);
 }
 
@@ -54,16 +51,10 @@ async function fetchImages(query, page) {
             return;
         }
         renderImages(data.hits);
-        loadMoreBtn.style.display = 'block'; // Показуємо кнопку після відображення зображень
-        if (data.totalHits <= page * 15) {
-            loadMoreBtn.classList.add('hidden');
-            iziToast.info({
-                title: 'End of Collection',
-                message: 'We\'re sorry, but you\'ve reached the end of search results.',
-                position: 'topRight'
-            });
+        if (data.totalHits > page * 15) { // Перевіряємо, чи є ще зображення для завантаження
+            loadMoreBtn.classList.remove('hidden'); // Показуємо кнопку "Load more"
         } else {
-            loadMoreBtn.classList.remove('hidden');
+            loadMoreBtn.classList.add('hidden'); // Ховаємо кнопку "Load more", якщо всі зображення вже завантажено
         }
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -75,6 +66,12 @@ async function fetchImages(query, page) {
     } finally {
         loader.classList.add('hidden');
     }
+}
+
+async function loadMoreImages() {
+    currentPage++; // Збільшуємо номер сторінки для наступного запиту
+    const query = inputForm.value.trim();
+    await fetchImages(query, currentPage);
 }
 function smoothScroll() {
     const cardHeight = document.querySelector('.photo-card').getBoundingClientRect().height;
